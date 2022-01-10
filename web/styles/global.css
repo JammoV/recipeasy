@@ -1,0 +1,13 @@
+body {
+    padding-bottom: 50px;
+    line-height: 2rem;
+}
+
+img {
+    max-width: 100%;;
+}
+
+.highlight {
+    background-color: rgb(174, 248, 230);
+    padding: 7px 5px;
+}
