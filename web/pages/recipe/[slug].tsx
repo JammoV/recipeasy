@@ -71,7 +71,13 @@ const RecipePost: React.FC<{recipe: Recipe}> = ({recipe}) => {
             {
                 steps && (
                     <ul>
-                        {steps.map((step, i) => <li key={i}>{step}</li>)}
+                        {
+                            steps.map((step, i) => (
+                                <li key={i}>
+                                    {step.instruction}
+                                </li>
+                                )
+                            )}
                     </ul>
                 )
             }

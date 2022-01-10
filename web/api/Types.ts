@@ -29,12 +29,15 @@ export interface Ingredient {
 }
 
 export interface Step {
-    step: string;
+    instruction: string;
+    duration: number;
+    isPreparation: boolean;
 }
 
 export interface Product {
     name: string;
     brand: Brand;
+    isBasic: boolean;
 }
 
 export interface Brand {
