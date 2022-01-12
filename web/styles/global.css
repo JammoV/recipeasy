@@ -11,3 +11,17 @@ img {
     background-color: rgb(174, 248, 230);
     padding: 7px 5px;
 }
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Neuton', serif;
+}
+
+h1 {
+    font-weight: normal;
+    font-size: 3rem;
+}
+
+h2 {
+    font-weight: normal;
+    font-size: 2rem;
+}

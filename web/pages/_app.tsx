@@ -3,14 +3,24 @@ import type { AppProps /*, AppContext */ } from 'next/app'
 import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
 import '../styles/global.css'
+import Header from '../components/Header'
+import Menu from '../components/Menu'
 
+import { ThemeProvider } from '@mui/material/styles'
+
+import theme from '../styles/theme'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return (<Container maxWidth='md'>
-      <CssBaseline />
-      <h1>Recipeasy</h1>
-      <Component {...pageProps} />
-      </Container>)
+  return (
+    <ThemeProvider theme={theme}>
+      <Container maxWidth='md'>
+        <CssBaseline />
+        <Header />
+        <Menu />
+        <Component {...pageProps} />
+        </Container>
+    </ThemeProvider>
+  )
 }
 
 // Only uncomment this method if you have blocking data requirements for
