@@ -1,0 +1,8 @@
+.eslintignore
+.env.local
+.gitignore
+.next
+node_modules
+.gitattributes
+package-lock.json
+next-env.d.ts
