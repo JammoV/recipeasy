@@ -118,18 +118,21 @@ const LiveInstructions: React.VFC<LiveInstructionsProps> = ({ steps, isActive, c
                 }
                 <Box sx={{
                     height: '100vh',
+                    minHeight: '-webkit-fill-available',
                     width: isMobile ? '100%' : '70%',
+                    display: 'flex',
+                    flexDirection: 'column'
                 }}>
                     <Box sx={{
                         display: 'flex',
                         flexDirection: 'column',
+                        flexGrow: '1',
                         fontSize: '2rem',
                         padding: '4rem',
                         textAlign: 'center',
                         fontFamily: ['Neuton', 'serif'].join(','),
                         alignItems: 'center',
-                        justifyContent: 'center',
-                        height: isMobile ? (activeStepIndex +1 === steps.length ? '90vh' : '75vh') : '80vh'
+                        justifyContent: 'center'
                     }}>
                         {
                             getStep(activeStepIndex)
@@ -152,7 +155,7 @@ const LiveInstructions: React.VFC<LiveInstructionsProps> = ({ steps, isActive, c
                     {
                         (isMobile && activeStepIndex +1 !== steps.length) && 
                             <Box sx={{
-                                height: '15vh',
+                                height: 'auto',
                                 m: 2,
                                 fontSize: '0.8rem',
                                 lineHeight: '1rem',
