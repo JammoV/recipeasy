@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import groq from 'groq'
 import imageUrlBuilder from '@sanity/image-url'
 // import BlockContent from '@sanity/block-content-to-react'
@@ -11,13 +11,16 @@ import { Box } from "@mui/material"
 
 import IngredientList from "../../components/IngredientList"
 import StepList from "../../components/StepList"
+import LiveInstructions from '../../components/LiveInstructions'
 
-function urlFor (source: string) {
+function urlFor(source: string) {
     return imageUrlBuilder(client).image(source)
 }
 
-const RecipePost: React.FC<{recipe: Recipe}> = ({recipe}) => {
-    if(!recipe) return null
+const RecipePost: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
+    if (!recipe) return null
+
+    const [liveInstructionsEnabled, setLiveInstructionsEnabled] = useState<boolean>(false);
 
     const {
         title = 'Missing title',
@@ -38,10 +41,10 @@ const RecipePost: React.FC<{recipe: Recipe}> = ({recipe}) => {
             <p>Serves: {servings}</p>
             <p>Duratie: {cookTime} minuten</p>
             <img
-                        src={urlFor(image)
-                            .width(300)
-                            .url()}
-                    />
+                src={urlFor(image)
+                    .width(300)
+                    .url()}
+            />
 
             {
                 tags && (
@@ -54,24 +57,28 @@ const RecipePost: React.FC<{recipe: Recipe}> = ({recipe}) => {
 
             <Box sx={{
                 display: 'flex',
-                flexDirection: {xs: 'column', sm: 'row'},
+                flexDirection: { xs: 'column', sm: 'row' },
             }}>
                 <Box sx={{
                     minWidth: '300px'
                 }}>
-                {
-                    ingredients && <IngredientList ingredients={ingredients} />
-                }
+                    {
+                        ingredients && <IngredientList ingredients={ingredients} />
+                    }
                 </Box>
                 <Box>
-                {
-                    steps && <StepList steps={steps} />
-                }
+                    {
+                        steps && <StepList steps={steps} />
+                    }
                 </Box>
             </Box>
+            <button onClick={() => setLiveInstructionsEnabled(!liveInstructionsEnabled)}>Live mode</button>
             {
                 source && <p>Bron: <Link href={source}>{source}</Link></p>
             }
+
+            <LiveInstructions steps={steps} isActive={liveInstructionsEnabled} closeHandler={() => setLiveInstructionsEnabled(false)} />
+
         </article>
     )
 }
@@ -82,7 +89,7 @@ export async function getStaticPaths() {
     )
 
     return {
-        paths: paths.map((slug: string) => ({params: {slug}})),
+        paths: paths.map((slug: string) => ({ params: { slug } })),
         fallback: true,
     }
 }

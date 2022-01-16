@@ -2,8 +2,8 @@ import React from 'react'
 import { Typography } from '@mui/material'
 
 const Header: React.VFC = () => (
-    <Typography 
-        align='center' 
+    <Typography
+        align='center'
         variant='body1'
         sx={{
             fontSize: '4rem',
