@@ -1,26 +1,24 @@
-// import App from "next/app";
-import type { AppProps /*, AppContext */ } from 'next/app'
-import CssBaseline from '@mui/material/CssBaseline'
 import Container from '@mui/material/Container'
-import '../styles/global.css'
+import CssBaseline from '@mui/material/CssBaseline'
+import { ThemeProvider } from '@mui/material/styles'
+import type { AppProps } from 'next/app'
+
 import Header from '../components/Header'
 import Menu from '../components/Menu'
-
-import { ThemeProvider } from '@mui/material/styles'
-
 import theme from '../styles/theme'
+import '../styles/global.css'
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <ThemeProvider theme={theme}>
-      <Container maxWidth='md'>
-        <CssBaseline />
-        <Header />
-        <Menu />
-        <Component {...pageProps} />
-        </Container>
-    </ThemeProvider>
-  )
+    return (
+        <ThemeProvider theme={theme}>
+            <Container maxWidth="md">
+                <CssBaseline />
+                <Header />
+                <Menu />
+                <Component {...pageProps} />
+            </Container>
+        </ThemeProvider>
+    )
 }
 
 // Only uncomment this method if you have blocking data requirements for

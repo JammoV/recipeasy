@@ -1,26 +1,27 @@
-import React, { useState } from "react"
-import groq from 'groq'
+import { Box } from '@mui/material'
 import imageUrlBuilder from '@sanity/image-url'
-// import BlockContent from '@sanity/block-content-to-react'
-import client from '../../client'
-import { Recipe } from "../../api/Types"
-import { GetRecipe } from "../../api/Queries"
-import { GetStaticProps } from "next"
+import groq from 'groq'
+import type { GetStaticProps } from 'next'
 import Link from 'next/link'
-import { Box } from "@mui/material"
+import React, { useState } from 'react'
 
-import IngredientList from "../../components/IngredientList"
-import StepList from "../../components/StepList"
+// import BlockContent from '@sanity/block-content-to-react'
+import { GetRecipe } from '../../api/Queries'
+import type { Recipe } from '../../api/Types'
+import client from '../../client'
+import IngredientList from '../../components/IngredientList'
 import LiveInstructions from '../../components/LiveInstructions'
+import StepList from '../../components/StepList'
 
 function urlFor(source: string) {
     return imageUrlBuilder(client).image(source)
 }
 
 const RecipePost: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
-    if (!recipe) return null
+    const [liveInstructionsEnabled, setLiveInstructionsEnabled] =
+        useState<boolean>(false)
 
-    const [liveInstructionsEnabled, setLiveInstructionsEnabled] = useState<boolean>(false);
+    if (!recipe) return null
 
     const {
         title = 'Missing title',
@@ -32,7 +33,7 @@ const RecipePost: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
         tags,
         ingredients,
         steps,
-        source
+        source,
     } = recipe
 
     return (
@@ -40,45 +41,54 @@ const RecipePost: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
             <h1>{title}</h1>
             <p>Serves: {servings}</p>
             <p>Duratie: {cookTime} minuten</p>
-            <img
-                src={urlFor(image)
-                    .width(300)
-                    .url()}
-            />
+            {description && <p>{description}</p>}
+            <p>Gepubliseerd op: {new Date(publishedAt).toDateString()}</p>
+            <img src={urlFor(image).width(300).url()} alt={title} />
 
-            {
-                tags && (
-                    <ul>
-                        Tags
-                        {tags.map((tag, i) => <li key={i}>{tag}</li>)}
-                    </ul>
-                )
-            }
+            {tags && (
+                <ul>
+                    Tags
+                    {tags.map((tag, i) => (
+                        <li key={i}>{tag}</li>
+                    ))}
+                </ul>
+            )}
 
-            <Box sx={{
-                display: 'flex',
-                flexDirection: { xs: 'column', sm: 'row' },
-            }}>
-                <Box sx={{
-                    minWidth: '300px'
-                }}>
-                    {
-                        ingredients && <IngredientList ingredients={ingredients} />
-                    }
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'column', sm: 'row' },
+                }}
+            >
+                <Box
+                    sx={{
+                        minWidth: '300px',
+                    }}
+                >
+                    {ingredients && (
+                        <IngredientList ingredients={ingredients} />
+                    )}
                 </Box>
-                <Box>
-                    {
-                        steps && <StepList steps={steps} />
-                    }
-                </Box>
+                <Box>{steps && <StepList steps={steps} />}</Box>
             </Box>
-            <button onClick={() => setLiveInstructionsEnabled(!liveInstructionsEnabled)}>Live mode</button>
-            {
-                source && <p>Bron: <Link href={source}>{source}</Link></p>
-            }
+            <button
+                onClick={() =>
+                    setLiveInstructionsEnabled(!liveInstructionsEnabled)
+                }
+            >
+                Live mode
+            </button>
+            {source && (
+                <p>
+                    Bron: <Link href={source}>{source}</Link>
+                </p>
+            )}
 
-            <LiveInstructions steps={steps} isActive={liveInstructionsEnabled} closeHandler={() => setLiveInstructionsEnabled(false)} />
-
+            <LiveInstructions
+                steps={steps}
+                isActive={liveInstructionsEnabled}
+                closeHandler={() => setLiveInstructionsEnabled(false)}
+            />
         </article>
     )
 }
@@ -95,7 +105,7 @@ export async function getStaticPaths() {
 }
 
 interface ResultData {
-    recipe: Recipe;
+    recipe: Recipe
 }
 
 export const getStaticProps: GetStaticProps<ResultData> = async (context) => {
@@ -104,8 +114,8 @@ export const getStaticProps: GetStaticProps<ResultData> = async (context) => {
     const recipe = await client.fetch(GetRecipe, { slug })
     return {
         props: {
-            recipe
-        }
+            recipe,
+        },
     }
 }
 export default RecipePost

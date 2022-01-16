@@ -13,4 +13,4 @@ const sanityConfig = {
     // see https://www.sanity.io/docs/api-versioning for how versioning works
 }
 
-export default sanityClient(sanityConfig);
+export default sanityClient(sanityConfig)
