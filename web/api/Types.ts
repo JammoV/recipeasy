@@ -22,6 +22,7 @@ export interface Tag {
 }
 
 export interface Ingredient {
+    _id: string
     amount: number
     unit: string
     product: string
@@ -29,17 +30,20 @@ export interface Ingredient {
 }
 
 export interface Step {
+    _id: string
     instruction: string
     duration: number
     isPreparation: boolean
 }
 
 export interface Product {
+    _id: string
     name: string
     brand: Brand
     isBasic: boolean
 }
 
 export interface Brand {
+    _id: string
     name: string
 }

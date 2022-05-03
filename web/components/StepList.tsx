@@ -9,10 +9,12 @@ interface StepListProps {
 const StepList: React.VFC<StepListProps> = ({ steps }) => {
     return (
         <>
-            <h2>Instructies</h2>
+            <h2 className="font-playfair text-2xl py-4">Instructies</h2>
             <ul>
-                {steps.map((step, i: number) => (
-                    <li key={i}>{step.instruction}</li>
+                {steps.map((step) => (
+                    <li className="py-1" key={step._id}>
+                        {step.instruction}
+                    </li>
                 ))}
             </ul>
         </>

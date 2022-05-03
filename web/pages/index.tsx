@@ -3,12 +3,14 @@ import type { GetStaticProps } from 'next'
 import Link from 'next/link'
 import React from 'react'
 
+import GenericTemplate from '@/templates/Generic'
+
 import type { Recipe } from '../api/Types'
 import client from '../client'
 
 const Index: React.FC<{ recipes: Recipe[] }> = ({ recipes }) => {
     return (
-        <div>
+        <GenericTemplate>
             <ul>
                 {recipes.length > 0 &&
                     recipes.map(
@@ -26,7 +28,7 @@ const Index: React.FC<{ recipes: Recipe[] }> = ({ recipes }) => {
                             )
                     )}
             </ul>
-        </div>
+        </GenericTemplate>
     )
 }
 
@@ -35,7 +37,7 @@ interface ResultData {
 }
 
 export const getStaticProps: GetStaticProps<ResultData> = async () => {
-    const recipes = await client.fetch(groq`
+    const recipes: Recipe[] = await client.fetch(groq`
       *[_type == "recipe" && publishedAt < now()] | order(publishedAt desc)
     `)
     return {

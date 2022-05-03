@@ -1,54 +1,47 @@
 {
-  "root": true,
-  "extends": [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:jsx-a11y/recommended",
-    "plugin:react-hooks/recommended"
-  ],
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "jsx-a11y",
-    "import",
-    "react-hooks",
-    "@typescript-eslint",
-    "prettier"
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:prettier/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
   ],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "project": ["./tsconfig.json"]
+  },
   "env": {
     "browser": true,
     "node": true,
     "es6": true
   },
-  "globals": {
-    "JSX": "readonly"
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
-    },
-    "import/resolver": {
-      "node": {
-        "extensions": [
-          ".js",
-          ".jsx",
-          ".ts",
-          ".tsx"
-        ]
-      },
-      "typescript": {}
-    }
-  },
   "rules": {
     "no-alert": "error",
     "no-console": "error",
-    "prettier/prettier": [
-      "warn",
+    "react/forbid-component-props": [
+      "error",
       {
-      },
+        "forbid": ["style"]
+      }
+    ],
+    "react/no-array-index-key": "error",
+    "@typescript-eslint/consistent-type-imports": "warn",
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "error",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "prettier/prettier": [
+      "error",
+      {},
       {
         "usePrettierrc": true
       }
     ],
+    "@typescript-eslint/explicit-function-return-type": "error",
     "import/order": [
       "warn",
       {
@@ -76,31 +69,30 @@
     "import/no-named-as-default": "warn",
     "import/no-named-as-default-member": "warn",
     "import/no-duplicates": "warn",
-    "@typescript-eslint/consistent-type-imports": "warn",
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/ban-ts-comment": "off"
-  },
-  "overrides": [
-    {
-      "files": [
-        "*.js"
-      ],
-      "rules": {
-        "@typescript-eslint/explicit-module-boundary-types": [
-          "off"
-        ],
-        "@typescript-eslint/no-var-requires": [
-          "off"
-        ]
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["hrefLeft", "hrefRight"],
+        "aspects": ["invalidHref", "preferButton"]
       }
+    ]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
     },
-    {
-      "files": [
-        "**/*.stories.*"
-      ],
-      "rules": {
-        "import/no-anonymous-default-export": "off"
+    "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      },
+      "typescript": {
+        "project": "./tsconfig.json"
       }
     }
-  ]
+  }
 }
